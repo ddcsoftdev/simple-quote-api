@@ -5,7 +5,7 @@ from rest_framework import serializers
 class QuoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quote
-        fields = ["id", "context", "author", "created_at"]
+        fields = ["id", "content", "author", "created_at"]
 
     def to_internal_value(self, attrs):
         if self.context["request"].method in ["PUT", "PATCH", "POST"]:

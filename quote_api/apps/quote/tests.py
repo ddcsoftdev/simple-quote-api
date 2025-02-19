@@ -16,13 +16,13 @@ class QuoteAPITestCase(TestCase):
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.token}")
 
-        Quote.objects.create(author="John Doe", context="Quote 1").save()
-        Quote.objects.create(author="Jane Doe", context="Quote 2").save()
+        Quote.objects.create(author="John Doe", content="Quote 1").save()
+        Quote.objects.create(author="Jane Doe", content="Quote 2").save()
 
         self.ERROR_MSGS = {
             "code": "Status Code Error:",
-            "data": "Data Integrity Error:",
-            "key": "Expected Key Missing Error:",
+            "content": "Data Content Integrity Error:",
+            "struct": "Data Structure Integrity Error:",
         }
 
     # TODO: delete if not used
@@ -30,30 +30,30 @@ class QuoteAPITestCase(TestCase):
         return super().tearDown()
 
     def data_integrity_check(self, response, data):
-        self.assertIn("id", response, f"{self.ERROR_MSGS["key"]} id")
-        self.assertIn("author", response, f"{self.ERROR_MSGS["key"]} author")
-        self.assertIn("context", response, f"{self.ERROR_MSGS["key"]} context")
-        self.assertIn("created_at", response, f"{self.ERROR_MSGS["key"]} created_at")
-    
+        self.assertIn("id", response, f"{self.ERROR_MSGS["struct"]} id")
+        self.assertIn("author", response, f"{self.ERROR_MSGS["struct"]} author")
+        self.assertIn("content", response, f"{self.ERROR_MSGS["struct"]} content")
+        self.assertIn("created_at", response, f"{self.ERROR_MSGS["struct"]} created_at")
+
         self.assertEqual(
             response["id"],
             str(data.id),
-            f"{self.ERROR_MSGS["data"]} id",
+            f"{self.ERROR_MSGS["content"]} id",
         )
         self.assertEqual(
             response["author"],
             data.author,
-            f"{self.ERROR_MSGS["data"]} author",
+            f"{self.ERROR_MSGS["content"]} author",
         )
         self.assertEqual(
-            response["context"],
-            data.context,
-            f"{self.ERROR_MSGS["data"]} context",
+            response["content"],
+            data.content,
+            f"{self.ERROR_MSGS["content"]} content",
         )
         self.assertEqual(
             response["created_at"],
-            data.created_at.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-            f"{self.ERROR_MSGS["data"]} created_at",
+            data.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+            f"{self.ERROR_MSGS["content"]} created_at",
         )
 
     def test_get_single_quote(self):
@@ -69,7 +69,7 @@ class QuoteAPITestCase(TestCase):
         quotes = Quote.objects.all()
         url = reverse("quote-list")
         response = self.client.get(url)
-        
+
         self.assertEqual(response.status_code, 200, self.ERROR_MSGS["code"])
         self.assertEqual(len(response.data["results"]), len(quotes))
         for index, data in enumerate(response.data["results"]):
