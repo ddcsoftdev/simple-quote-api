@@ -8,7 +8,7 @@ from .serializers import QuoteSerializer
 
 #list, retrieve, create, partial_update, update, destroy, random
 class QuoteViewSet(viewsets.ModelViewSet):
-    """ViewSet for Quote Model"""
+    """Endpoints for Quote Model"""
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
     filter_backends = [DjangoFilterBackend]

@@ -1,1 +1,6 @@
 fero.code-workspace
+.DS_Store
+.vscode/*
+quote_api/apps/quote/__pycache__/*
+quote_api/quote_api/__pycache__/*
+quote_api/apps/__pycache__/*
