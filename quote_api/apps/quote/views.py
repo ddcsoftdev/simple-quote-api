@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .models import Quote
 from .serializers import QuoteSerializer
 
-#list retrieve create partial_update update destroy 
+#list, retrieve, create, partial_update, update, destroy, random
 class QuoteViewSet(viewsets.ModelViewSet):
     """ViewSet for Quote Model"""
     queryset = Quote.objects.all()
@@ -21,9 +21,9 @@ class QuoteViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
         
         
-    
     @action(detail=False, methods=["get"])
     def random(self, request):
         quote = Quote.objects.order_by('?').first()
         serializer = self.get_serializer(quote)
         return Response(serializer.data)
+    
