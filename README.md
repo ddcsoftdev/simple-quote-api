@@ -71,7 +71,10 @@ curl http://localhost:8000/api/v1/quote/3fa85f64-5717-4562-b3fc-2c963f66afa6/
 ```
 #### Create a Quote
 ```bash
-curl -X POST http://localhost:8000/api/v1/quote/ \n  -H "Authorization: Bearer YOUR_JWT_TOKEN" \n  -H "Content-Type: application/json" \n  -d '{"author": "John Doe", "content": "Quote 1"}'
+curl -X POST http://localhost:8000/api/v1/quote/ \  
+    -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+    -H "Content-Type: application/json" \ 
+    -d '{"author": "John Doe", "content": "Quote 1"}'
 ```
 #### Update a Quote
 ```bash
@@ -93,7 +96,8 @@ curl http://localhost:8000/api/v1/quote/random/
 ## Authentication
 #### Obtain a JWT Token:
 ```bash
-curl -X POST http://localhost:8000/api/v1/login/ \n  -d '{"username": "test_user", "password": "password1234"}'
+curl -X POST http://localhost:8000/api/v1/login/ \
+  -d '{"username": "test_user", "password": "password1234"}'
 ```
 #### Response:
 ```json
