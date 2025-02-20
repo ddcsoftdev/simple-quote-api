@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from django.test import TestCase
 from .models import Quote
+import uuid
 
 
 class QuoteAPITestCase(TestCase):
@@ -120,6 +121,50 @@ class QuoteAPITestCase(TestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, 401, self.ERROR_MSGS["code"])
+
+    def test_get_quote_not_found(self):
+        """Get a Quote that does not exist"""
+        wrong_id = str(uuid.uuid4())
+        url = reverse("quote-detail", kwargs={"pk": str(wrong_id)})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404, self.ERROR_MSGS["code"])
+
+    def test_update_quote_not_found(self):
+        """Update a Quote that does not exist"""
+        wrong_id = str(uuid.uuid4())
+        url = reverse("quote-detail", kwargs={"pk": str(wrong_id)})
+        body = {"author": "Marcus Doe", "content": "Modified Quote"}
+        response = self.client.put(url, body)
+        self.assertEqual(response.status_code, 404, self.ERROR_MSGS["code"])
+
+    def test_delete_quote_not_found(self):
+        """Delete a Quote that does not exist"""
+        wrong_id = str(uuid.uuid4())
+        url = reverse("quote-detail", kwargs={"pk": str(wrong_id)})
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, 404, self.ERROR_MSGS["code"])
+
+    def test_create_quote_invalid_body(self):
+        """Create a Quote with invalid body"""
+        url = reverse("quote-list")
+        body = {"data": "Teresa Doe", "content": "Quote 3"}
+        response = self.client.post(url, body)
+        self.assertEqual(response.status_code, 400, self.ERROR_MSGS["code"])
+
+    def test_create_quote_incomplete_body(self):
+        """Create a Quote with incomplete body"""
+        url = reverse("quote-list")
+        body = {"content": "Quote 3"}
+        response = self.client.post(url, body)
+        self.assertEqual(response.status_code, 400, self.ERROR_MSGS["code"])
+
+    def test_update_quote_id(self):
+        """Update a Quote's id"""
+        quote = Quote.objects.create(author="Teresa Doe", content="Original Quote")
+        url = reverse("quote-detail", kwargs={"pk": str(quote.id)})
+        body = {"id": str(uuid.uuid4()), "author": "Ana", "content": "Quote"}
+        response = self.client.put(url, body)
+        self.assertEqual(response.status_code, 400, self.ERROR_MSGS["code"])
 
     def data_integrity_check(self, response, reference):
         self.assertIsNotNone(response, f"{self.ERROR_MSGS["missing"]} response")
