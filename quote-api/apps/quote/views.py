@@ -11,10 +11,10 @@ class QuoteViewSet(viewsets.ModelViewSet):
     """Endpoints for Quote Model"""
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
-    filterset_fields = ['author', 'content']
+    filterset_fields = ["author", "content"]
     
     def get_permissions(self):
-        if self.action in ['list', 'retrieve', 'random']:
+        if self.action in ["list", "retrieve", "random"]:
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAuthenticated]
