@@ -119,12 +119,12 @@ curl -X POST http://localhost:8000/api/v1/login/ \
 ```
 
 ### Validation Rules
-- `author`: Required (max 200 characters).
-- `content`: Required.
-- `id` and `created_at`: Auto-generated (cannot be modified).
+- `author`: Required (max 200 characters)
+- `content`: Required
+- `id` and `created_at`: Auto-generated (cannot be modified)
 
 ## Testing
-Run the test suite with:
+Run the tests with:
 ```bash
 python manage.py test
 ```
