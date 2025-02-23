@@ -11,7 +11,7 @@ class QuoteViewSet(viewsets.ModelViewSet):
     """Endpoints for Quote Model"""
     queryset = Quote.objects.all()
     serializer_class = QuoteSerializer
-    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['author', 'content']
     
     def get_permissions(self):
         if self.action in ['list', 'retrieve', 'random']:

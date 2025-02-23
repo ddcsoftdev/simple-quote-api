@@ -1,11 +1,12 @@
 # Simple Quote API
 
-A RESTful API built with Django and Django REST framework for managing and retrieving quotes. This API supports CRUD operations, JWT authentication, and includes a feature to fetch a random quote.
+A RESTful API built with Django and Django REST framework for managing and retrieving quotes. This API supports CRUD operations, JWT authentication, filtering, and includes a feature to fetch a random quote.
 
 ## Features
 - **CRUD Operations**: Create, Retrieve, Update, and Delete quotes.
 - **Random Quote**: Fetch a random quote from the collection.
 - **JWT Authentication**: Secure endpoints with JSON Web Tokens.
+- **Filtering**: Filtering quotes by author or content.
 - **Data Validation**: Ensures data integrity on Create and Update endpoints.
 
 ## Installation
